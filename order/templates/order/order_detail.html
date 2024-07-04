@@ -1,0 +1,39 @@
+{% extends 'order/base.html' %}
+{% block title %}Order {{ order.id }}{% endblock  %}
+{% block content %}
+    <div class="container">
+        <h2 class="order-title">Order {{ order.id }}</h2>
+        <div class="order-details">
+            <p><strong>Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
+            <p><strong>Email:</strong> {{ order.email }}</p>
+            <p><strong>Address:</strong> {{ order.address }}</p>
+            <p><strong>Postal Code:</strong> {{ order.postal_code }}</p>
+            <p><strong>City:</strong> {{ order.city }}</p>
+        </div>
+        <div class="order-items">
+            <h3>Items</h3>
+            <ul class="list-group">
+                {% for item in order.items.all %}
+                    <li class="list-group-item">
+                        <div>
+                            <strong>{{ item.menu_item.name }}</strong> - ${{ item.price }} x {{ item.quantity }}
+                        </div>
+                        <div>
+                            <span class="badge badge-primary badge-pill">${{ item.get_cost }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="total-cost">
+                <strong>Total: ${{ order.get_total_cost }}</strong>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            {% if order.paid == False %}
+                <a href="{% url 'payments' order.id %}" class="btn btn-primary btn-lg">Proceed to Payment</a>
+            {% else %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">Back to dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+  {% endblock %}

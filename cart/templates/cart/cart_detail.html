@@ -1,0 +1,27 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Menu{% endblock  %}
+{% block content %}
+
+    <main class="pt-5 mx-lg-5">
+        <h2>Cart</h2>
+        {% if cart.items.all %}
+            <ul class="list-group">
+                {% for item in cart.items.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <img src="{{ item.menu_item.image.url }}" alt="{{ item.menu_item.name }}" width="80" class="img-fluid rounded">
+                        {{ item.menu_item.name }} - ${{ item.menu_item.price }} x {{ item.quantity }}
+                        <span>#{{ item.get_cost }}</span>
+                        <div>
+                            <a href="{% url 'add_to_cart' item.menu_item.id %}" class="btn btn-success btn-sm">+</a>
+                            <a href="{% url 'remove_from_cart' item.menu_item.id %}" class="btn btn-danger btn-sm">-</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h3>Total: ${{ cart.get_total_cost }}</h3>
+            <a href="{% url 'order_create' %}" class="btn btn-primary">Proceed to Checkout</a>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+        </main>
+{% endblock %}

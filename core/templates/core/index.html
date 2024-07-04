@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block title %}Indax{% endblock  %}
+{% block content %}
+    <div class="hero">
+        {% if site_settings.background_video %}
+        <video autoplay muted loop id="background-video">
+            <source src="{{ site_settings.background_video.url }}" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        {% endif %}
+        <div class="content">
+            <h1>{{ site_settings.site_description }}</h1>
+            <button onclick="location.href='{% url 'login' %}'">Login</button>
+        </div>
+    </div>
+
+{% endblock %}

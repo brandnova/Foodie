@@ -1,0 +1,218 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Dashboard{% endblock  %}
+{% block content %}
+
+    
+  <!--Main layout-->
+  <main class="pt-5 mx-lg-5">
+    <div class="container-fluid mt-5">
+      <h4>Welcome, {{ user.username }}!</h4>
+
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-9 mb-4">
+<<<<<<< HEAD
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <canvas id="myChart"></canvas>
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+=======
+          <!--Card-->
+          <div class="card">
+              <!--Card content-->
+              <div class="card-body">
+                  {% comment %} <canvas id="myChart"></canvas> {% endcomment %}
+                  <canvas id="barChart" style="max-height: 400px;"></canvas>
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        // Get the data passed from the view
+                        const dates = JSON.parse('{{ dates|safe }}');
+                        const amounts = JSON.parse('{{ amounts|safe }}');
+                    
+                        console.log("Dates:", dates); // Debug print
+                        console.log("Amounts:", amounts); // Debug print
+                    
+                        new Chart(document.querySelector('#barChart'), {
+                            type: 'bar',
+                            data: {
+                                labels: dates,
+                                datasets: [{
+                                    label: 'Amount Spent',
+                                    data: amounts,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(255, 205, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(201, 203, 207, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(255, 159, 64)',
+                                        'rgb(255, 205, 86)',
+                                        'rgb(75, 192, 192)',
+                                        'rgb(54, 162, 235)',
+                                        'rgb(153, 102, 255)',
+                                        'rgb(201, 203, 207)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    });
+                  </script>
+              </div>
+          </div>
+          <!--/.Card-->
+>>>>>>> master
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-3 mb-4">
+<<<<<<< HEAD
+
+          <!--Card-->
+          <div class="card mb-4">
+
+            <!-- Card header -->
+            <div class="card-header text-center">
+              Pie chart
+            </div>
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <canvas id="pieChart"></canvas>
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+=======
+>>>>>>> master
+          <!--Card-->
+          <div class="card mb-4">
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <!-- List group links -->
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action waves-effect">Sales
+                  <span class="badge badge-success badge-pill pull-right">22%
+                    <i class="fas fa-arrow-up ml-1"></i>
+                  </span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Traffic
+                  <span class="badge badge-danger badge-pill pull-right">5%
+                    <i class="fas fa-arrow-down ml-1"></i>
+                  </span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Orders
+                  <span class="badge badge-primary badge-pill pull-right">14</span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Issues
+                  <span class="badge badge-primary badge-pill pull-right">123</span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Messages
+                  <span class="badge badge-primary badge-pill pull-right">8</span>
+                </a>
+              </div>
+              <!-- List group links -->
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <h3>Order History</h3>
+<<<<<<< HEAD
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Details</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for order in orders %}
+              <tr>
+                  <td>{{ order.id }}</td>
+                  <td>{{ order.created_at }}</td>
+                  <td>&#x20A6;{{ order.get_total_cost }}</td>
+                  <td>{{ order.get_status_display }}</td>
+                  <td><a href="{% url 'order_detail' order.id %}">View</a></td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      
+
+=======
+      <table class="table table-borderless datatable">
+        <thead>
+          <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Total</th>
+            <th scope="col">Status</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          {% for order in orderss %}
+            <tr>
+              <th scope="row">{{ order.id }}</th>
+              <td>{{ order.created_at }}</td>
+              <td>&#x20A6;{{ order.get_total_cost }}</td>
+              <td><span class="badge {% if order.paid == True %}bg-success{% elif order.paid == False %} bg-danger {% endif %} ">{{ order.paid }}</span></td>
+              <td><a href="{% url 'order_detail' order.id %}" class="text-primary">View</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        
+      </table>
+      <div class="text-center">
+        <a href="{% url "orders" %}" class="btn btn-primary"> View order History</a>
+      </div>
+>>>>>>> master
+    </div>
+  </main>
+  <!--Main layout-->
+
+  
+{% endblock %}
