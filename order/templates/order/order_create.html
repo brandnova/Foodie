@@ -1,0 +1,102 @@
+{% extends 'order/base.html' %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+    <div class="container">
+        <h2 class="checkout-title">Checkout</h2>
+<<<<<<< HEAD
+        <div class="form-container">
+=======
+        <div class="cart-container my-5">
+            <h3>Your Cart</h3>
+            <ul class="list-group">
+                {% for item in cart.items.all %}
+                    <li class="list-group-item">
+                        <div>
+                            <strong>{{ item.menu_item.name }}</strong> - ${{ item.menu_item.price }} x {{ item.quantity }}
+                        </div>
+                        <div>
+                            <span class="badge badge-primary badge-pill">${{ item.get_cost }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="total-cost">
+                <strong>Total: ${{ cart.get_total_cost }}</strong>
+            </div>
+        </div>
+        <div class="form-container">
+            <h3 class="my-3">Delivery Info</h3>
+>>>>>>> master
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_first_name">First Name</label>
+                    {{ form.first_name }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_last_name">Last Name</label>
+                    {{ form.last_name }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    {{ form.email }}
+                </div>
+<<<<<<< HEAD
+=======
+
+                <div class="form-group">
+                    <label for="id_phone">Phone</label>
+                    {{ form.phone }}
+                </div>
+>>>>>>> master
+                
+                <div class="form-group">
+                    <label for="id_address">Address</label>
+                    {{ form.address }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_postal_code">Postal Code</label>
+                    {{ form.postal_code }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_city">City</label>
+                    {{ form.city }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_extra_details">Additional Details</label>
+                    {{ form.extra_details }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+            </form>
+        </div>
+<<<<<<< HEAD
+        <div class="cart-container">
+            <h3>Your Cart</h3>
+            <ul class="list-group">
+                {% for item in cart.items.all %}
+                    <li class="list-group-item">
+                        <div>
+                            <strong>{{ item.menu_item.name }}</strong> - ${{ item.menu_item.price }} x {{ item.quantity }}
+                        </div>
+                        <div>
+                            <span class="badge badge-primary badge-pill">${{ item.get_cost }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="total-cost">
+                <strong>Total: ${{ cart.get_total_cost }}</strong>
+            </div>
+        </div>
+=======
+        
+>>>>>>> master
+    </div>
+{% endblock %}

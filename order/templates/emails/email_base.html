@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #e1e1e1;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #888888;
+        }
+        .footer p {
+            margin: 5px;
+        }
+        .order-details {
+            margin-bottom: 20px;
+        }
+        .ordered-items {
+            margin-top: 10px;
+        }
+        
+       /* Optional: Customize table appearance */
+        .ordered-items .table {
+            width: 100%; /* Ensure table takes full width of its container */
+            border-collapse: collapse; /* Remove spacing between table cells */
+        }
+
+        /* Optional: Customize table header */
+        .ordered-items .table thead th {
+            border-bottom: 2px solid #dee2e6; /* Gray border bottom for table header */
+            vertical-align: middle; /* Center-align text vertically in header */
+        }
+
+        /* Optional: Customize table body (tbody) */
+        .ordered-items .table tbody {
+            border-top: 2px solid #dee2e6; /* Gray border top for table body */
+        }
+
+        /* Optional: Customize table row (tr) */
+        .ordered-items .table tbody tr {
+            border-bottom: 1px solid #dee2e6; /* Gray border bottom for each row */
+        }
+
+        /* Optional: Customize table cell (td) */
+        .ordered-items .table tbody td,
+        .ordered-items .table tbody th {
+            border: none; /* Remove default table cell borders */
+            padding: 0.75rem; /* Adjust cell padding */
+            vertical-align: middle; /* Center-align text vertically in cells */
+        }
+
+        /* Optional: Add divider between table rows */
+        .ordered-items .table-group-divider .table-divider-color tr:not(:last-child) {
+            border-bottom: 1px solid #dee2e6; /* Gray border bottom for all rows except last */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Order Confirmation</h2>
+        </div>
+        {% block content %}
+        {% endblock %}
+        <div class="footer">
+            <p>Foodie App &copy; 2024. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
