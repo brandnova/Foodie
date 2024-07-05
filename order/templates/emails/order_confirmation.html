@@ -1,27 +1,9 @@
-<<<<<<< HEAD
-{% extends 'order/base.html' %}
-{% block title %}Order Confirmation{% endblock  %}
-{% block content %}
-    <div class="container">
-        <h2>Order Confirmation</h2>
-        <p>Dear {{ order.first_name }} {{ order.last_name }},</p>
-        <p>Thank you for your order. Your order ID is {{ order.id }}.</p>
-        <p>Order Details:</p>
-        <ul>
-            {% for item in order.items.all %}
-            <li>{{ item.menu_item.name }} - ${{ item.menu_item.price }} x {{ item.quantity }}</li>
-            {% endfor %}
-        </ul>
-        <p><strong>Payment Reference:</strong> {{ order.payment_reference }}</p>
-        <p>Total: &#x20A6;{{ order.get_total_cost }}</p>
-        <p>We will notify you when your order status changes.</p>
-        <a href="{% url 'dashboard' %}" class="btn btn-primary m-3">Return to Dashboard</a>
-    </div>
-{% endblock %}
-=======
 {% extends 'emails/email_base.html' %}
 {% block title %}Order Confirmation{% endblock  %}
 {% block content %}
+        <div class="header">
+            <h2>Order Confirmation </h2>
+        </div>
         <p>Dear {{ order.first_name }} {{ order.last_name }},</p>
         <p>Thank you for your order. Your order ID is {{ order.id }}.</p>
 
@@ -47,9 +29,8 @@
                 </table>
             </div>
 
-        <p><strong>Payment Reference:</strong> {{ order.payment_reference }}</p>
+        <p><strong>Order Ref:</strong> {{ order.payment_reference }}</p>
         <p>Total: &#x20A6;{{ order.get_total_cost }}</p>
         <p>We will notify you when your order status changes.</p>
         <a href="{% url 'dashboard' %}" class="btn btn-primary m-3 rounded p-2">Return to Dashboard</a>
 {% endblock %}
->>>>>>> master

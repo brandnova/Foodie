@@ -9,6 +9,7 @@
             <p><strong>Address:</strong> {{ order.address }}</p>
             <p><strong>Postal Code:</strong> {{ order.postal_code }}</p>
             <p><strong>City:</strong> {{ order.city }}</p>
+            <p><strong>Order Ref:</strong> {{ order.payment_reference }}</p>
         </div>
         <div class="order-items">
             <h3>Items</h3>
@@ -16,23 +17,28 @@
                 {% for item in order.items.all %}
                     <li class="list-group-item">
                         <div>
-                            <strong>{{ item.menu_item.name }}</strong> - ${{ item.price }} x {{ item.quantity }}
+                            <strong>{{ item.menu_item.name }}</strong> - &#x20A6;{{ item.price }} x {{ item.quantity }}
                         </div>
                         <div>
-                            <span class="badge badge-primary badge-pill">${{ item.get_cost }}</span>
+                            <span class="badge badge-primary badge-pill">&#x20A6;{{ item.get_cost }}</span>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
             <div class="total-cost">
-                <strong>Total: ${{ order.get_total_cost }}</strong>
+                <strong>Total: &#x20A6;{{ order.get_total_cost }} <br><span>Paid: <span class="badge {% if order.paid == True %} badge-success {% else %}badge-danger{% endif %} badge-pill">{{ order.paid }}</span></span> </strong>
             </div>
         </div>
         <div class="text-center mt-4">
             {% if order.paid == False %}
-                <a href="{% url 'payments' order.id %}" class="btn btn-primary btn-lg">Proceed to Payment</a>
+                <div class="row d-flex justify-content-center">
+                    <a href="{% url 'payments' order.id %}" class="btn btn-primary btn-lg">Proceed to Payment</a>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-lg">Back to dashboard</a>
+                </div>
             {% else %}
-                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">Back to dashboard</a>
+                <div class="row d-flex justify-content-center"></div>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-lg">Back to dashboard</a>
+                </div>
             {% endif %}
         </div>
     </div>

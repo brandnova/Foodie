@@ -1,0 +1,20 @@
+<!-- templates/emails/order_status_update.html -->
+{% extends 'emails/email_base.html' %}
+{% block title %}Order Status Update{% endblock %}
+{% block content %}
+    <div class="header">
+        <h2>Order Status Update</h2>
+    </div>
+    <p>Dear {{ order.first_name }} {{ order.last_name }},</p>
+    <p>We are writing to inform you that the status of your order with the following details has been updated:</p>
+    <p>
+        <strong>Order ID:</strong> {{ order.id }}<br>
+        <strong>Order Ref:</strong> {{ order.payment_reference }}<br>
+        <strong>Total Amount:</strong> {{ order.get_total_cost }}<br>
+        <strong>Payment Status:</strong> {{ order.paid }}<br>
+    </p>
+    <p>If you have any questions or need further assistance, please do not hesitate to contact us at {{ site_settings.support_email }}.</p>
+    <p>Thank you for shopping with us!</p>
+    <p>Best regards,</p>
+    <p>{{ site_settings.site_title }} Team</p>
+{% endblock %}

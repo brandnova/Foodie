@@ -1,0 +1,46 @@
+{% extends 'emails/email_base.html' %}
+{% block title %}Order Confirmation{% endblock  %}
+{% block content %}
+    <div class="header">
+        <h2>Order Confirmation</h2>
+    </div>
+    <div class="order-details">
+        <p>Dear Admin,</p>
+        <p>An order has been placed with the following details:</p>
+
+        <p><strong>Order ID:</strong> {{ order.id }}</p>
+        <p><strong>Order Ref:</strong> {{ order.payment_reference }}</p>
+        <p><strong>Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
+        <p><strong>Email:</strong> {{ order.email }}</p>
+        <p><strong>Phone:</strong> {{ order.phone }}</p>
+        <p><strong>Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.postal_code }}</p>
+
+        <h3>Ordered Items:</h3>
+        <div class="ordered-items">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider table-divider-color">
+                    {% for item in order.items.all %}
+                        <tr>
+                            <th scope="row">{{ item.menu_item.name }}</th>
+                            <td>&#x20A6;{{ item.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <p><strong>Total Amount:</strong> &#x20A6;{{ order.get_total_cost }}</p>
+
+        <p>Please process this order promptly.</p>
+
+        <p>Thank you!</p>
+    </div>
+{% endblock %}

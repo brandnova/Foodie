@@ -12,9 +12,11 @@ from django.http import HttpResponse, JsonResponse
 from .models import Order, OrderItem, BankAccount
 from .forms import OrderCreateForm, PaystackPaymentForm
 from cart.models import Cart, CartItem
+from core.models import SiteSettings
 
 
 def send_order_confirmation_email(order):
+    site_settings = SiteSettings.objects.first()
     subject = f"Order Confirmation - {order.id}"
     to_email = [order.email]
     from_email = settings.EMAIL_HOST_USER
@@ -22,6 +24,7 @@ def send_order_confirmation_email(order):
 
     context = {
         'order': order,
+        'site_settings': site_settings,
     }
 
     message_user = render_to_string('emails/order_confirmation.html', context)
@@ -42,11 +45,11 @@ def order_create(request):
         if form.is_valid():
             order = form.save(commit=False)
             order.user = request.user
-<<<<<<< HEAD
-=======
             order.created_at = timezone.now()
->>>>>>> master
-            order.save()
+            order.save()  # Save the order to generate an ID
+            # Now that the order is saved, you can generate the payment reference
+            order.payment_reference = f"DT-{order.id}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
+            order.save()  # Save the order again to update the payment reference
             for item in cart.items.all():
                 OrderItem.objects.create(order=order, menu_item=item.menu_item, price=item.menu_item.price, quantity=item.quantity)
             cart.items.all().delete()
@@ -56,41 +59,17 @@ def order_create(request):
         form = OrderCreateForm()
     return render(request, 'order/order_create.html', {'cart': cart, 'form': form})
 
-<<<<<<< HEAD
-# @login_required
-# def order_create(request):
-#     cart = get_object_or_404(Cart, user=request.user)
-#     if request.method == 'POST':
-#         form = OrderCreateForm(request.POST)
-#         if form.is_valid():
-#             order = form.save(commit=False)
-#             order.user = request.user
-#             order.created_at = timezone.now()
-#             order.save()
-#             for item in cart.items.all():
-#                 OrderItem.objects.create(
-#                     order=order,
-#                     menu_item=item.menu_item,
-#                     price=item.menu_item.price,
-#                     quantity=item.quantity
-#                 )
-#             # Clear the cart
-#             cart.items.all().delete()
-#             return redirect('order_detail', order_id=order.id)
-#     else:
-#         form = OrderCreateForm()
-#     return render(request, 'order/order_create.html', {'cart': cart, 'form': form})
-
-=======
->>>>>>> master
 
 def send_order_status_update_email(order):
+    site_settings = SiteSettings.objects.first()  # Adjust query as needed
+
     subject = f"Order Status Update - {order.id}"
     to_email = [order.email]
     from_email = settings.EMAIL_HOST_USER
 
     context = {
         'order': order,
+        'site_settings': site_settings,
     }
 
     message = render_to_string('emails/order_status_update.html', context)
@@ -104,13 +83,11 @@ def update_order_status(order, new_status):
     send_order_status_update_email(order)
 
 
-
-
-
 @login_required
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'order/order_detail.html', {'order': order})
+
 
 @login_required
 def payments_select(request, order_id):
@@ -149,23 +126,26 @@ def paystack_payment(request, order_id):
             # Handle exceptions (e.g., connection error)
             pass
 
-    return render(request, 'order/paystack_payment.html', {'order': order, 'email': order.email, 'amount': int(order.get_total_cost())})
+    context = {
+        'order': order,
+        'email': order.email,
+        'amount': int(order.get_total_cost()),
+        'first_name': order.first_name,
+        'last_name': order.last_name,
+    }
+    return render(request, 'order/paystack_payment.html', context)
 
 
 def direct_transfer_payment(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     account = BankAccount.objects.all()
-    # Fetch account details from admin interface or wherever stored
-    
     if request.method == 'POST':
         # Handle direct bank transfer payment
         proof_of_payment = request.FILES.get('proof_of_payment')
         if proof_of_payment:
-            # Save proof of payment to order
             order.proof_of_payment = proof_of_payment
             # Generate and save payment reference (example: using order ID + timestamp)
-            order.payment_reference = f"DT-{order.id}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
-            order.paid = True  # Update payment status based on verification
+            # order.payment_reference = f"DT-{order.id}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
             order.save()
             return redirect('direct_transfer_payment_confirmation', order_id=order.id)
     return render(request, 'order/direct_transfer_payment.html', {'order': order, 'account': account})

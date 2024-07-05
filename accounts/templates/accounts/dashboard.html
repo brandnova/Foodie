@@ -13,27 +13,12 @@
       <div class="row wow fadeIn">
 
         <!--Grid column-->
-        <div class="col-md-9 mb-4">
-<<<<<<< HEAD
-
-          <!--Card-->
-          <div class="card">
-
-            <!--Card content-->
-            <div class="card-body">
-
-              <canvas id="myChart"></canvas>
-
-            </div>
-
-          </div>
-          <!--/.Card-->
-
-=======
+        <div class="col-md-12 mb-4">
           <!--Card-->
           <div class="card">
               <!--Card content-->
               <div class="card-body">
+                  <h5 class="card-title">Bar Chart</h5>
                   {% comment %} <canvas id="myChart"></canvas> {% endcomment %}
                   <canvas id="barChart" style="max-height: 400px;"></canvas>
                   <script>
@@ -86,34 +71,11 @@
               </div>
           </div>
           <!--/.Card-->
->>>>>>> master
         </div>
         <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-md-3 mb-4">
-<<<<<<< HEAD
-
-          <!--Card-->
-          <div class="card mb-4">
-
-            <!-- Card header -->
-            <div class="card-header text-center">
-              Pie chart
-            </div>
-
-            <!--Card content-->
-            <div class="card-body">
-
-              <canvas id="pieChart"></canvas>
-
-            </div>
-
-          </div>
-          <!--/.Card-->
-
-=======
->>>>>>> master
+        {% comment %} <div class="col-md-3 mb-4">
           <!--Card-->
           <div class="card mb-4">
 
@@ -149,39 +111,13 @@
           </div>
           <!--/.Card-->
 
-        </div>
+        </div> {% endcomment %}
         <!--Grid column-->
 
       </div>
       <!--Grid row-->
 
       <h3>Order History</h3>
-<<<<<<< HEAD
-      <table class="table">
-          <thead>
-              <tr>
-                  <th>Order ID</th>
-                  <th>Date</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Details</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for order in orders %}
-              <tr>
-                  <td>{{ order.id }}</td>
-                  <td>{{ order.created_at }}</td>
-                  <td>&#x20A6;{{ order.get_total_cost }}</td>
-                  <td>{{ order.get_status_display }}</td>
-                  <td><a href="{% url 'order_detail' order.id %}">View</a></td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-      
-
-=======
       <table class="table table-borderless datatable">
         <thead>
           <tr>
@@ -209,7 +145,6 @@
       <div class="text-center">
         <a href="{% url "orders" %}" class="btn btn-primary"> View order History</a>
       </div>
->>>>>>> master
     </div>
   </main>
   <!--Main layout-->
