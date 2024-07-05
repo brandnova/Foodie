@@ -1,17 +1,11 @@
-<<<<<<< HEAD
-=======
 import json
->>>>>>> master
 from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
-=======
 from django.db.models import Sum
 from datetime import date, timedelta
 from django.db.models.functions import TruncDate
->>>>>>> master
 from order.models import Order
 # from .decorators import prevent_authenticated_access
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserUpdateForm
@@ -49,14 +43,6 @@ def register_view(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 
-<<<<<<< HEAD
-@login_required
-def dashboard_view(request):
-    orders = Order.objects.filter(user=request.user)
-    return render(request, 'accounts/dashboard.html', {'orders': orders})
-
-# accounts/views.py
-=======
 # @login_required
 # def dashboard_view(request):
 #     orders = Order.objects.filter(user=request.user)
@@ -95,7 +81,6 @@ def user_order(request):
     return render(request, 'accounts/user_order.html', {'orderss': orderss})
 
 
->>>>>>> master
 
 @login_required
 def profile(request):
