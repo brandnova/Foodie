@@ -89,8 +89,8 @@
   <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
     <!--Copyright-->
     <div class="footer-copyright py-3">
-      © 2024 Copyright:
-      <a href="#" target="_blank"> MDBootstrap.com </a>
+      <a href="{% url "index" %}" target="_blank">{{ site_settings.site_title }}</a> © 2024 All rights reserved.
+      <p><strong>Support: </strong>{{ site_settings.support_email }}</p>
     </div>
     <!--/.Copyright-->
 

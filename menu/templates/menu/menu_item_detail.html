@@ -3,12 +3,13 @@
 {% block content %}
 
     <main class="pt-5 mx-lg-5">
-        <h2>{{ item.name }}</h2>
+        <h2 class=" mt-5">{{ item.name }}</h2>
         {% if item.image %}
             <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-fluid">
         {% endif %}
         <p>{{ item.description }}</p>
-        <p>Price: ${{ item.price }}</p>
+        <p><strong>Category:</strong> {{ item.category }}</p>
+        <p><strong>Price:</strong> &#x20A6; {{ item.price }}</p>
         <a href="{% url 'menu_list' %}" class="btn btn-primary">Back to Menu</a>
         <a href="{% url 'add_to_cart' item.pk %}" class="btn btn-success">Add to Cart</a>
         </main>

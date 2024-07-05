@@ -7,6 +7,8 @@ class SiteSettings(models.Model):
     meta_description = models.TextField()
     meta_keywords = models.CharField(max_length=255)
     background_video = models.FileField(upload_to='site_settings/', blank=True, null=True)
+    authPage_bgImg= models.ImageField(upload_to='site_settings/', null=True)
+    site_logo= models.ImageField(upload_to='site_settings/', null=True, blank=True)
     support_email = models.EmailField(null=True)
     contact_number = models.CharField(max_length=20, null=True)
 

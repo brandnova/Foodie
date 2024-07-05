@@ -1,2 +1,2 @@
 # Foodie
-Food Ordering WebApp with Django and Bootstrao
+Food Ordering WebApp with Django and Bootstrap
