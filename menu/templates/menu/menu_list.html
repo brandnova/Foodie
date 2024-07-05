@@ -3,24 +3,28 @@
 {% block content %}
 
     <main class="pt-5 mx-lg-5">
-        <h2>Menu</h2>
-        {% for category in categories %}
-            <h3>{{ category.name }}</h3>
-            <ul class="list-group">
-                {% for item in category.items.all %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <a href="{% url 'menu_item_detail' item.pk %}">{{ item.name }}</a> - ${{ item.price }}
-                            {% if item.image %}
-                                <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
-                            {% endif %}
-                        </div>
-                        <div>
-                            <a href="{% url 'add_to_cart' item.pk %}" class="btn btn-primary btn-sm">Add to Cart</a>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-        </main>
+        <div class="container my-5">
+            <h2>Menu</h2>
+            {% for category in categories %}
+                <div class="mt-4">
+                    <h3 class="card-header rounded bg-light">{{ category.name }}</h3>
+                </div>
+                <ul class="list-group">
+                    {% for item in category.items.all %}
+                        <li class="list-group-item d-flex my-1 justify-content-between align-items-center rounded">
+                            <div>
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                                {% endif %}
+                                <a href="{% url 'menu_item_detail' item.pk %}" class="mx-3">{{ item.name }}</a> - &#x20A6; {{ item.price }}
+                            </div>
+                            <div>
+                                <a href="{% url 'add_to_cart' item.pk %}" class="btn btn-primary btn-sm">Add to Cart</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    </main>
 {% endblock %}
