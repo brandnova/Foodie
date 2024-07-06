@@ -2,7 +2,7 @@
 {% block title %}Choose Payment Method{% endblock  %}
 {% block content %}
     <div class="container">
-        <h2 class="payment-title">Choose Payment Method</h2>
+        <h3 class="my-5 rounded p-3 bg-light text-center">Choose Payment Method</h3>
         <div class="payment-options col">
             <a href="{% url 'paystack_payment' order.id %}" class="btn btn-primary">Pay with Paystack</a>
             <a href="{% url 'direct_transfer_payment' order.id %}" class="btn btn-secondary">Pay via Direct Transfer</a>

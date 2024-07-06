@@ -6,7 +6,11 @@
   <!--Main layout-->
   <main class="pt-5 mx-lg-5">
     <div class="container-fluid mt-5">
-      <h4>Welcome, {{ user.username }}!</h4>
+      
+      <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <h4><strong>Welcome,</strong> {{ user.username }}!</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
 
 
       <!--Grid row-->
@@ -73,76 +77,45 @@
           <!--/.Card-->
         </div>
         <!--Grid column-->
-
-        <!--Grid column-->
-        {% comment %} <div class="col-md-3 mb-4">
-          <!--Card-->
-          <div class="card mb-4">
-
-            <!--Card content-->
-            <div class="card-body">
-
-              <!-- List group links -->
-              <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action waves-effect">Sales
-                  <span class="badge badge-success badge-pill pull-right">22%
-                    <i class="fas fa-arrow-up ml-1"></i>
-                  </span>
-                </a>
-                <a class="list-group-item list-group-item-action waves-effect">Traffic
-                  <span class="badge badge-danger badge-pill pull-right">5%
-                    <i class="fas fa-arrow-down ml-1"></i>
-                  </span>
-                </a>
-                <a class="list-group-item list-group-item-action waves-effect">Orders
-                  <span class="badge badge-primary badge-pill pull-right">14</span>
-                </a>
-                <a class="list-group-item list-group-item-action waves-effect">Issues
-                  <span class="badge badge-primary badge-pill pull-right">123</span>
-                </a>
-                <a class="list-group-item list-group-item-action waves-effect">Messages
-                  <span class="badge badge-primary badge-pill pull-right">8</span>
-                </a>
-              </div>
-              <!-- List group links -->
-
-            </div>
-
-          </div>
-          <!--/.Card-->
-
-        </div> {% endcomment %}
-        <!--Grid column-->
-
       </div>
       <!--Grid row-->
 
-      <h3>Order History</h3>
-      <table class="table table-borderless datatable">
-        <thead>
-          <tr>
-            <th scope="col">Order ID</th>
-            <th scope="col">Date</th>
-            <th scope="col">Total</th>
-            <th scope="col">Status</th>
-            <th scope="col">Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-          {% for order in orderss %}
-            <tr>
-              <th scope="row">{{ order.id }}</th>
-              <td>{{ order.created_at }}</td>
-              <td>&#x20A6;{{ order.get_total_cost }}</td>
-              <td><span class="badge {% if order.paid == True %}bg-success{% elif order.paid == False %} bg-danger {% endif %} ">{{ order.paid }}</span></td>
-              <td><a href="{% url 'order_detail' order.id %}" class="text-primary">View</a></td>
-            </tr>
-          {% endfor %}
-        </tbody>
-        
-      </table>
-      <div class="text-center">
+      <h3 class="my-5 rounded p-3 bg-light text-center"><strong>Recent Orders</strong></h3>
+      <div class="card p-3">
+        {% if orderss %}
+          <table class="table table-borderless datatable rounded">
+              <thead>
+                  <tr>
+                      <th scope="col">Order ID</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Details</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for order in orderss %}
+                      <tr>
+                          <th scope="row">{{ order.id }}</th>
+                          <td>{{ order.created_at }}</td>
+                          <td>&#x20A6;{{ order.get_total_cost }}</td>
+                          <td>
+                              <span class="badge rounded {% if order.paid %}badge-success{% else %}badge-danger{% endif %}">
+                                  {{ order.paid|yesno:"Paid,Unpaid" }}
+                              </span>
+                          </td>
+                          <td><a href="{% url 'order_detail' order.id %}" class="text-primary">View</a></td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      {% else %}
+          <div class="alert alert-info text-center" role="alert">
+              There are no orders to display.
+          </div>
+      {% endif %}
+      </div>
+      <div class="text-center m-3">
         <a href="{% url "orders" %}" class="btn btn-primary"> View order History</a>
       </div>
     </div>

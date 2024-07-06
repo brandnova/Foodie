@@ -29,4 +29,6 @@ def remove_from_cart(request, item_id):
 @login_required
 def cart_detail(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
-    return render(request, 'cart/cart_detail.html', {'cart': cart})
+    carts = get_object_or_404(Cart, user=request.user)
+    cart_count = carts.items.count()
+    return render(request, 'cart/cart_detail.html', {'cart': cart, 'cart_count': cart_count,})

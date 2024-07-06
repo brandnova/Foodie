@@ -2,12 +2,12 @@
 {% block title %}Checkout{% endblock %}
 {% block content %}
     <div class="container">
-        <h2 class="checkout-title">Checkout</h2>
+        <h2 class="my-5 rounded p-3 bg-light text-center">Checkout</h2>
         <div class="cart-container my-5">
             <h3>Your Cart</h3>
             <ul class="list-group">
                 {% for item in cart.items.all %}
-                    <li class="list-group-item">
+                    <li class="list-group-item rounded my-1">
                         <div>
                             <strong>{{ item.menu_item.name }}</strong> - &#x20A6;{{ item.menu_item.price }} x {{ item.quantity }}
                         </div>
@@ -26,47 +26,49 @@
             <form method="post">
                 {% csrf_token %}
                 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_first_name">First Name</label>
                     {{ form.first_name }}
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_last_name">Last Name</label>
                     {{ form.last_name }}
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_email">Email</label>
                     {{ form.email }}
                 </div>
 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_phone">Phone</label>
                     {{ form.phone }}
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_address">Address</label>
                     {{ form.address }}
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_postal_code">Postal Code</label>
                     {{ form.postal_code }}
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_city">City</label>
                     {{ form.city }}
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group my-3">
                     <label for="id_extra_details">Additional Details (Optional)</label>
                     {{ form.extra_details }}
                 </div>
                 
-                <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+                </div>
             </form>
         </div>
         
