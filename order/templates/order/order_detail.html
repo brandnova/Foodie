@@ -2,7 +2,7 @@
 {% block title %}Order {{ order.id }}{% endblock  %}
 {% block content %}
     <div class="container">
-        <h2 class="order-title">Order {{ order.id }}</h2>
+        <h3 class="my-5 rounded p-3 bg-light text-center"><strong>Order {{ order.id }}</strong></h3>
         <div class="order-details">
             <p><strong>Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
             <p><strong>Email:</strong> {{ order.email }}</p>
@@ -15,7 +15,7 @@
             <h3>Items</h3>
             <ul class="list-group">
                 {% for item in order.items.all %}
-                    <li class="list-group-item">
+                    <li class="list-group-item rounded my-1">
                         <div>
                             <strong>{{ item.menu_item.name }}</strong> - &#x20A6;{{ item.price }} x {{ item.quantity }}
                         </div>
@@ -26,17 +26,21 @@
                 {% endfor %}
             </ul>
             <div class="total-cost">
-                <strong>Total: &#x20A6;{{ order.get_total_cost }} <br><span>Paid: <span class="badge {% if order.paid == True %} badge-success {% else %}badge-danger{% endif %} badge-pill">{{ order.paid }}</span></span> </strong>
+                <strong>Total: &#x20A6;{{ order.get_total_cost }} <br><span> Status: 
+                    <span class="badge rounded {% if order.paid %}badge-success{% else %}badge-danger{% endif %}">
+                        {{ order.paid|yesno:"Paid,Unpaid" }}
+                    </span>
+                </span></strong>
             </div>
         </div>
-        <div class="text-center mt-4">
+        <div class="text-center my-4">
             {% if order.paid == False %}
-                <div class="row d-flex justify-content-center">
-                    <a href="{% url 'payments' order.id %}" class="btn btn-primary btn-lg">Proceed to Payment</a>
+                <div class="d-flex justify-content-between">
                     <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-lg">Back to dashboard</a>
+                    <a href="{% url 'payments' order.id %}" class="btn btn-primary btn-lg">Proceed to Payment</a>
                 </div>
             {% else %}
-                <div class="row d-flex justify-content-center"></div>
+                <div class="d-flex justify-content-center"></div>
                     <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-lg">Back to dashboard</a>
                 </div>
             {% endif %}

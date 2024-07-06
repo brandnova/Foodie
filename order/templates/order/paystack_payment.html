@@ -1,8 +1,8 @@
 {% extends 'order/base.html' %}
-{% block title %}Payment Method{% endblock  %}
+{% block title %}Paystack{% endblock  %}
 {% block content %}
 <div class="container">
-    <h2>Pay with Paystack</h2>
+    <h3 class="my-5 rounded p-3 bg-light text-center">Pay with Paystack</h3>
     <form method="post">
         {% csrf_token %}
         <div class="form-group">

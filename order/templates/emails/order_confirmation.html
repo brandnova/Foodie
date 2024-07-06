@@ -2,7 +2,10 @@
 {% block title %}Order Confirmation{% endblock  %}
 {% block content %}
         <div class="header">
-            <h2>Order Confirmation </h2>
+            <h1 style="font-family: 'Segoe Script', cursive; font-size: 24px; font-weight: bold;">
+                {{ site_settings.site_title }}
+            </h1>
+            <h3>Order Confirmation</h3>
         </div>
         <p>Dear {{ order.first_name }} {{ order.last_name }},</p>
         <p>Thank you for your order. Your order ID is {{ order.id }}.</p>

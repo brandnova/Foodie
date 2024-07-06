@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-{% block title %}Indax{% endblock  %}
+{% block title %}Index{% endblock  %}
 {% block content %}
     <div class="hero">
         {% if site_settings.background_video %}
@@ -9,8 +9,13 @@
         </video>
         {% endif %}
         <div class="content">
-            <h1>{{ site_settings.site_description }}</h1>
-            <button onclick="location.href='{% url 'login' %}'">Login</button>
+            <img src="{{ site_settings.site_logo.url }}" class="img-fluid" alt="Logo">
+            <h3>{{ site_settings.site_description }}</h3>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="button">Dashboard</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="button">Login</a>
+            {% endif %}
         </div>
     </div>
 
