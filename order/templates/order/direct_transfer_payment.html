@@ -1,22 +1,29 @@
 {% extends 'order/base.html' %}
 {% block title %}Direct Transfer{% endblock  %}
 {% block content %}
-    <div class="container mt-5">
+    <div class="container">
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title text-center">Direct Bank Transfer</h2>
                 <hr>
-                <div class="bank-details">
-                    <p class="text-center mb-4">Transfer <strong>&#x20A6; {{ order.get_total_cost }}</strong> to any of the following accounts:</p>
-                    <!-- Display account details fetched from admin interface -->
+                <p class="text-center mb-4">Transfer <strong>&#x20A6; {{ order.get_total_cost }}</strong> to any of the following accounts:</p>
+                
+                <!-- Responsive Grid for Bank Accounts -->
+                <div class="row justify-content-center">
                     {% for acc in account %}
-                    <p><strong>Bank:</strong> {{ acc.bank_name }}</p>
-                    <p><strong>Account Number:</strong> {{ acc.account_number }}</p>
-                    <p><strong>Account Name:</strong> {{ acc.account_name }}</p>
-                    <hr>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <p><strong>Bank:</strong> {{ acc.bank_name }}</p>
+                                <p><strong>Account Number:</strong> {{ acc.account_number }}</p>
+                                <p><strong>Account Name:</strong> {{ acc.account_name }}</p>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
                 
+                <hr>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <!-- Proof of Payment Upload -->
@@ -24,7 +31,10 @@
                         <label class="form-label" for="proof_of_payment">Upload Proof of Payment</label>
                         <input type="file" class="form-control" id="proof_of_payment" name="proof_of_payment" accept="image/*" required>
                     </div>
-                    <button type="submit" class="btn btn-success my-2">Confirm Payment</button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success my-2">Confirm Payment</button>
+                        <a href="{% url "dashboard" %}" class="btn btn-secondary my-2">Return to Dashboard</a>
+                    </div>
                 </form>
             </div>
         </div>
