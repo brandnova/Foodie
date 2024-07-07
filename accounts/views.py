@@ -85,7 +85,7 @@ def dashboard_view(request):
 
 @login_required
 def user_order(request):
-    orderss = Order.objects.filter(user=request.user).order_by('created_at')
+    orderss = Order.objects.filter(user=request.user).order_by('-created_at')
     cart = get_object_or_404(Cart, user=request.user)
     cart_count = cart.items.count()
 
