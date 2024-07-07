@@ -1,44 +1,42 @@
 {% extends 'order/base.html' %}
 {% block title %}Order Confirmation{% endblock  %}
 {% block content %}
-<div class="container">
-    <div class="text-center">
-        <h2>Order Confirmation</h2>
-        <p>Dear {{ order.first_name }} {{ order.last_name }},</p>
-        <p>Thank you for your order. Your order ID is {{ order.id }}.</p>
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h3 class="my-5 rounded p-3 bg-light text-center"><strong>Order Confirmation</strong></h3>
+        <p class="lead">Dear {{ order.first_name }} {{ order.last_name }},</p>
+        <p>Thank you for your order. Your order ID is <strong>{{ order.id }}</strong>.</p>
         <p><strong>Order Details:</strong></p>
     </div>
-
     <div class="d-flex justify-content-center mb-4">
-        <div class="card border-dark bg-transparent p-3" style="max-width: 700px; max-height: 800px; overflow-y: scroll;">
-            <table class="table table-hover rounded">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Qty</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for item in order.items.all %}
-                  <tr>
-                    <th scope="row">{{ item.menu_item.name }}</th>
-                    <td>- &#x20A6;{{ item.menu_item.price }}</td>
-                    <td>x {{ item.quantity }}</td>
-                  </tr>
-                {% endfor %} 
-                </tbody>
-            </table>
+        <div class="card border-dark bg-transparent p-3" style="max-width: 700px;">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered rounded">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                        <tr>
+                            <td>{{ item.menu_item.name }}</td>
+                            <td>&#x20A6;{{ item.menu_item.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
     <div class="text-center">
         <p><strong>Order Ref:</strong> {{ order.payment_reference }}</p>
         <p><strong>Total:</strong> &#x20A6;{{ order.get_total_cost }}</p>
-        <p>We will notify you when your order status changes.</p>
-        <a href="{% url 'dashboard' %}" class="btn btn-primary m-3">Return to Dashboard</a>
+        <p class="mb-4">We will notify you when your order status changes.</p>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">Return to Dashboard</a>
     </div>
 </div>
-
-
 {% endblock %}
