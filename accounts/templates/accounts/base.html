@@ -123,6 +123,12 @@
                   <hr>
               </li>
               <li class="nav-item">
+                <a href="{% url "contact" %}" class="nav-link mb-2 text-dark" aria-current="page">
+                    <i class="mx-2 bi bi-geo-alt mr-3"></i>Contact
+                </a>
+                <hr>
+              </li>
+              <li class="nav-item">
                   <div class="nav-link mb-2 text-dark" aria-current="page">
                       <i class="mx-2 bi bi-box-arrow-left mr-3"></i>
                       <form method="post" action="{% url 'logout' %}" class="d-inline">
@@ -144,18 +150,21 @@
   {% block content %}
 
   {% endblock %}
+  
 
   <!--Footer-->
   <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
     <!--Copyright-->
     <div class="footer-copyright py-3">
       <a href="{% url "index" %}" target="_blank">{{ site_settings.site_title }}</a> © 2024 All rights reserved.
-      <p><strong>Support: </strong>{{ site_settings.support_email }}</p>
+      <p><strong class="mx-2">Support: </strong>{{ site_settings.support_email }} -<strong class="mx-2">Contact: </strong>{{ site_settings.contact_number }}</p>
     </div>
     <!--/.Copyright-->
 
   </footer>
   <!--/.Footer-->
+
+  
 
   <!-- SCRIPTS -->
   <!-- JQuery -->

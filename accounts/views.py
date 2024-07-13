@@ -118,3 +118,12 @@ def profile(request):
         'user_form': user_form,
         'cart_count': cart_count,
         })
+
+def contact(request):
+    orders = Order.objects.filter(user=request.user)
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_count = cart.items.count()
+    return render(request, 'accounts/contact.html',{
+        'orders': orders, 
+        'cart_count': cart_count,
+    })

@@ -11,6 +11,10 @@ class SiteSettings(models.Model):
     site_logo= models.ImageField(upload_to='site_settings/', null=True, blank=True)
     support_email = models.EmailField(null=True)
     contact_number = models.CharField(max_length=20, null=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    open_hrs = models.CharField(max_length=255, null=True, blank=True)
+    live_chat_wgt = models.CharField(max_length=1000, null=True, blank=True)
+    whatsapp_btn = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return self.site_title
