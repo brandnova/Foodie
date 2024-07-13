@@ -17,6 +17,7 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     proof_of_payment = models.ImageField(upload_to='proofs_of_payment/', blank=True, null=True)
     payment_reference = models.CharField(max_length=100, blank=True, null=True)
+    pystk_ref = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"Order {self.id} - {self.email}"

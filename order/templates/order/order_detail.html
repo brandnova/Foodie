@@ -3,6 +3,21 @@
 {% block content %}
     <div class="container">
         <h3 class="my-5 rounded p-3 bg-light text-center"><strong>Order {{ order.id }}</strong></h3>
+
+        {% if order.paid == True %}
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                
+                
+                <h6><strong><i class="bi bi-check-circle-fill m-3"></i>Your payment for this order has been confirmed.</strong></h6>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif order.paid == False %}
+            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                <h6><strong><i class="bi bi-x-circle-fill m-3"></i>Your payment for this order has not yet been confirmed.</strong></h6>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
         <div class="order-details">
             <p><strong>Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
             <p><strong>Email:</strong> {{ order.email }}</p>
@@ -10,6 +25,7 @@
             <p><strong>Postal Code:</strong> {{ order.postal_code }}</p>
             <p><strong>City:</strong> {{ order.city }}</p>
             <p><strong>Order Ref:</strong> {{ order.payment_reference }}</p>
+            <p><strong>Paystack Ref:</strong> {{ order.pystk_ref }}</p>
         </div>
         <div class="order-items">
             <h3>Items</h3>

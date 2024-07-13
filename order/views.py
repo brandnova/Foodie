@@ -118,6 +118,10 @@ def paystack_payment(request, order_id):
             if response.status_code == 200:
                 response_data = response.json()
                 authorization_url = response_data['data']['authorization_url']
+                paystack_reference = response_data['data']['reference']
+                order.pystk_ref = paystack_reference
+                order.save()
+
                 return redirect(authorization_url)
             else:
                 # Handle Paystack API error response
@@ -134,8 +138,9 @@ def paystack_payment(request, order_id):
         'last_name': order.last_name,
     }
     return render(request, 'order/paystack_payment.html', context)
+    
 
-
+@login_required
 def direct_transfer_payment(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     account = BankAccount.objects.all()
@@ -144,55 +149,62 @@ def direct_transfer_payment(request, order_id):
         proof_of_payment = request.FILES.get('proof_of_payment')
         if proof_of_payment:
             order.proof_of_payment = proof_of_payment
-            # Generate and save payment reference (example: using order ID + timestamp)
-            # order.payment_reference = f"DT-{order.id}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
             order.save()
             return redirect('direct_transfer_payment_confirmation', order_id=order.id)
     return render(request, 'order/direct_transfer_payment.html', {'order': order, 'account': account})
 
-
+@login_required
 def paystack_payment_confirmation(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'order/payment_confirmation.html', {'order': order})
 
+@login_required
 def direct_transfer_payment_confirmation(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'order/payment_confirmation.html', {'order': order})
+    
 
-
+@csrf_exempt
 @login_required
 def paystack_callback(request):
     reference = request.GET.get('reference')
+    url = f"https://api.paystack.co/transaction/verify/{reference}"
     headers = {
-        'Authorization': f'Bearer {settings.PAYSTACK_SECRET_KEY}',
+        "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
     }
-    response = requests.get(f'https://api.paystack.co/transaction/verify/{reference}', headers=headers)
-    if response.status_code == 200:
-        response_data = response.json()
-        if response_data['data']['status'] == 'success':
-            order_id = response_data['data']['metadata']['order_id']
-            order = get_object_or_404(Order, id=order_id)
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
+    
+    if response_data['status']:
+        transaction_data = response_data['data']
+        try:
+            # Retrieve the order using the pystk_ref field
+            order = get_object_or_404(Order, pystk_ref=transaction_data['reference'])
             order.paid = True
             order.save()
             return redirect('order_detail', order_id=order.id)
-    return redirect('order_create')
-
+        except Exception as e:
+            print("Error updating order:", e)
+    else:
+        print("Transaction verification failed:", response_data)
+    
+    return JsonResponse(response_data)
+    
 
 @csrf_exempt
 def paystack_webhook(request):
-    # Verify that the request came from Paystack
-    if request.method == 'POST':
-        payload = json.loads(request.body)
-        event = payload.get('event')
-        if event == 'charge.success':
-            reference = payload.get('data').get('reference')
-            # Fetch the order using the reference or other data
-            order = Order.objects.filter(payment_reference=reference).first()
-            if order:
-                order.paid = True
-                order.save()
-                # Respond with a success message
-                return JsonResponse({'status': 'success'})
-    # Respond with an error or fallback
-    return JsonResponse({'status': 'error'}, status=400)
-
+    payload = json.loads(request.body)
+    event = payload.get('event')
+    
+    if event == 'charge.success':
+        transaction_data = payload['data']
+        reference = transaction_data['reference']
+        try:
+            # Retrieve the order using the pystk_ref field
+            order = get_object_or_404(Order, pystk_ref=reference)
+            order.paid = True
+            order.save()
+        except Exception as e:
+            print("Error updating order:", e)
+    
+    return HttpResponse(status=200)

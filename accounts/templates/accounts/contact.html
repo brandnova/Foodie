@@ -1,0 +1,116 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Contact{% endblock  %}
+{% block content %}
+<header>
+    {{ site_settings.live_chat_wgt }}
+</header>
+<style>
+    #px-z{
+        font-size: 40px;
+    }
+</style>
+<main class="pt-5 mx-lg-5">
+    <!-- Contact 5 - Bootstrap Brain Component -->
+<section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="my-5 rounded p-3 bg-light text-center"><strong>Contact</strong></h3>
+          <h4 class="text-center mb-4 mb-md-5 mb-xl-8">We're always available for order placements. Please get in touch in one of the following ways.</h4>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container">
+      <div class="row gy-4 gy-md-5 gy-lg-0 align-items-md-center">
+        <div class="col-12 card py-4 px-3">
+          <div class="row justify-content-xl-center">
+            <div class="col-12 col-xl-11">
+              <div class="mb-4 mb-md-5">
+                <div class="mb-3 text-primary">
+                    <i class="bi bi-geo" id="px-z"></i>
+                </div>
+                <div>
+                  <h4 class="mb-2">Office</h4>
+                  <p class="mb-2">Please visit us to have a discussion.</p>
+                  <hr class="w-50 mb-3 border-dark-subtle">
+                  <address class="m-0 text-secondary">{{ site_settings.address }}</address>
+                </div>
+              </div>
+              <div class="row mb-sm-4 mb-md-5">
+                <div class="col-12 col-sm-6">
+                  <div class="mb-4 mb-sm-0">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-telephone-outbound" id="px-z"></i>
+                    </div>
+                    <div>
+                      <h4 class="mb-2">Phone</h4>
+                      <p class="mb-2">Please speak with us directly.</p>
+                      <hr class="w-75 mb-3 border-dark-subtle">
+                      <p class="mb-0">
+                        <a class="link-secondary text-decoration-none" href="tel:+{{ site_settings.contact_number }}">{{ site_settings.contact_number }}</a>
+                        (Click to call)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="mb-4 mb-sm-0">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-envelope-at" id="px-z"></i>
+                    </div>
+                    <div>
+                      <h4 class="mb-2">Email</h4>
+                      <p class="mb-2">Please write to us directly.</p>
+                      <hr class="w-75 mb-3 border-dark-subtle">
+                      <p class="mb-0">
+                        <a class="link-secondary text-decoration-none" href="mailto:{{ site_settings.support_email }}">{{ site_settings.support_email }}</a>
+                        (Click to mail)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="mb-3 text-primary">
+                    <i class="bi bi-alarm" id="px-z"></i>
+                </div>
+                <div>
+                  <h4 class="mb-2">Opening Hours</h4>
+                  <p class="mb-2">Explore our business opening hours.</p>
+                  <hr class="w-50 mb-3 border-dark-subtle">
+                  <div class="d-flex mb-1">
+                    <p class="text-secondary fw-bold mb-0 me-5">{{ site_settings.open_hrs }}</p>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+</main>
+<!--Live chat widget from admin-->
+{% if site_settings.live_chat_wgt %}
+  {{ site_settings.live_chat_wgt }}
+{% endif %}
+
+<!--Whatsapp Button-->
+<script type="text/javascript">
+    (function () {
+        var options = {
+            whatsapp: "{{ site_settings.contact_number }}", // WhatsApp number
+            call_to_action: "Message us", // Call to action
+            position: "right", // Position may be 'right' or 'left'
+            pre_filled_message: "Hello I am", // WhatsApp pre-filled message
+        };
+        var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+  </script>
+{% endblock %}
