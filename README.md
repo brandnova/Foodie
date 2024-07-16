@@ -85,7 +85,7 @@ Now that you have Django installed, you can now clone this repository and run th
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/foodie.git
+    git clone https://github.com/brandnova/Foodie.git
     cd foodie
     ```
 
